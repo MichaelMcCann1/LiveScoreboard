@@ -90,14 +90,12 @@ export default function NFL({totalWeeks}) {
     axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?week=${week}`)
     .then(res => {
       let workingSetGames = []
-      console.log(res.data)
       for (let i=0; i<res.data.events.length; i++) {
         let gameArray = res.data.events[i].competitions[0]
         let temp = {
           id: gameArray.id,
           date: formatDate(gameArray.date),
           time: formatTime(gameArray.date),
-          tv: gameArray.broadcasts[0].names[0],
           awayColor: `#${gameArray.competitors[1].team.color}F2`,
           awayLogo: gameArray.competitors[1].team.logo,
           awayName: `${gameArray.competitors[1].team.name}`,
@@ -111,11 +109,12 @@ export default function NFL({totalWeeks}) {
           homeScore:  gameArray.competitors[0].score,
           homeLocation:  gameArray.competitors[0].team.location,
           status: gameArray.status.type.description,
-          homeAbbreviation: gameArray.competitors[1].team.abbreviation
+          homeAbbreviation: gameArray.competitors[0].team.abbreviation,
+          awayAbbreviation: gameArray.competitors[1].team.abbreviation
         } 
           try{
             temp.spread = gameArray.odds[0].details
-            if (temp.homeAbbreviation === temp.spread.substring(0,3).replace(/\s/g, "")) {
+            if (temp.awayAbbreviation === temp.spread.substring(0,3).replace(/\s/g, "")) {
               temp.spread = temp.spread.substring(temp.spread.length-5)
               temp.spread = temp.spread.replace('-','+')
             }
@@ -127,6 +126,12 @@ export default function NFL({totalWeeks}) {
           } catch {
             temp.spread = ''
             temp.overUnder = ''
+          }
+
+          try{
+            temp.tv = gameArray.broadcasts[0].names[0]
+          } catch {
+            temp.tv = ''
           }
 
         if (temp.awayName === "undefined") temp.awayName = "Washington"
@@ -152,12 +157,14 @@ export default function NFL({totalWeeks}) {
             awayRecord: game.awayRecord,
             awayScore: game.awayScore,
             awayLocation: game.awayLocation,
+            awayAbbreviation: game.awayAbbreviation,
             homeColor: game.homeColor,
             homeLogo: game.homeLogo,
             homeName: game.homeName,
             homeRecord: game.homeRecord,
             homeScore: game.homeScore,
             homeLocation: game.homeLocation,
+            homeAbbreviation: game.homeAbbreviation,
             status: game.status,
             spread: game.spread,
             overUnder: game.overUnder

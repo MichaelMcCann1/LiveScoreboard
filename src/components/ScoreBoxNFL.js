@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const breakPoint = '(max-width: 550px)'
 
@@ -8,21 +9,12 @@ const Container = styled.div`
   margin: 2em 1em;
   max-width: 400px;
   min-width: 350px;
-  transition: all .25s ease;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.4);
-
-  :hover {
-    transform: scale(1.03);
-  }
 
   @media ${breakPoint} {
     width: 100%;
     min-width: auto;
     margin: 1em auto;
-
-    :hover {
-      transform: none;
-    }
   }
 `
 
@@ -48,12 +40,18 @@ font-weight: 700;
 margin-left: auto;
 `
 
-const LogoBackground = styled.div`
+const LogoBackground = styled(Link)`
   width: 100%;
   height: 100px;
   background-color: ${props => props.color};
   display: flex;
   align-items: center;
+  transition: all .3s ease;
+  text-decoration: none;
+
+  :hover {
+    transform: scale(1.03);
+  }
 
   @media ${breakPoint} {
     height: 70px;
@@ -136,7 +134,7 @@ export default function ScoreBoxNFL({gameData}) {
         <Time>{gameData.status === "Final" ? gameData.status : gameData.time}</Time>
         <TV>{gameData.status === "Final" ? '' : gameData.tv}</TV>
       </GameInfo>
-      <LogoBackground color={gameData.awayColor}>
+      <LogoBackground color={gameData.awayColor} to={`/NFL/TeamPage/${gameData.awayAbbreviation}`}>
         <Logo src={gameData.awayLogo} alt={`${gameData.awayName} logo`}/>
         <NameWrapper>
           <Location>{gameData.awayLocation}</Location>
@@ -144,7 +142,7 @@ export default function ScoreBoxNFL({gameData}) {
         </NameWrapper>
         <Score>{gameData.status === "Scheduled" ? (gameData.overUnder === '' ? '' : `T:${gameData.overUnder}`) : gameData.awayScore}</Score>
       </LogoBackground>
-      <LogoBackground color={gameData.homeColor}>
+      <LogoBackground color={gameData.homeColor} to={`/NFL/TeamPage/${gameData.homeAbbreviation}`}>
         <Logo src={gameData.homeLogo} alt={`${gameData.homeName} logo`}/>
         <NameWrapper>
           <Location>{gameData.homeLocation}</Location>

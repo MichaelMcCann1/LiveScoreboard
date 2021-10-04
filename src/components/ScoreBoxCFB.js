@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const breakPoint = '(max-width: 550px)'
 
@@ -11,18 +12,10 @@ const Container = styled.div`
   transition: all .25s ease;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.4);
 
-  :hover {
-    transform: scale(1.03);
-  }
-
   @media ${breakPoint} {
     width: 100%;
     min-width: auto;
     margin: 1em auto;
-
-    :hover {
-      transform: none;
-    }
   }
 `
 
@@ -48,12 +41,18 @@ font-weight: 700;
 margin-left: auto;
 `
 
-const LogoBackground = styled.div`
+const LogoBackground = styled(Link)`
   width: 100%;
   height: 90px;
   background-color: ${props => props.color};
   display: flex;
   align-items: center;
+  transition: all .3s ease;
+  text-decoration: none;
+
+  :hover {
+    transform: scale(1.03);
+  }
 
   @media ${breakPoint} {
     height: 70px;
@@ -129,7 +128,7 @@ export default function ScoreBox({gameData}) {
         <Time>{gameData.status === "Final" ? gameData.status : gameData.time}</Time>
         <TV>{gameData.status === "Final" ? '' : gameData.tv}</TV>
       </GameInfo>
-      <LogoBackground color='rgb(240, 240, 240)'>
+      <LogoBackground color='rgb(240, 240, 240)' to={{pathname: `/CFB/TeamPage/${gameData.awayAbbreviation}`, state: {schoolid: gameData.awayID}}}>
         <Logo src={gameData.awayLogo} alt={`${gameData.awayName} logo`}/>
         <NameWrapper>
           <School>{gameData.awaySchool}</School>
@@ -137,7 +136,7 @@ export default function ScoreBox({gameData}) {
         </NameWrapper>
         <Score>{gameData.status === "Scheduled" ? (gameData.overUnder === '' ? '' : `T:${gameData.overUnder}`) : gameData.awayScore}</Score>
       </LogoBackground>
-      <LogoBackground color='rgb(250, 250, 250)'>
+      <LogoBackground color='rgb(250, 250, 250)' to={{pathname: `/CFB/TeamPage/${gameData.homeAbbreviation}`, state: {schoolid: gameData.homeID}}}>
         <Logo src={gameData.homeLogo} alt={`${gameData.homeName} logo`}/>
         <NameWrapper>
           <School>{gameData.homeSchool}</School>

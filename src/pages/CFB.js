@@ -90,6 +90,7 @@ export default function CFB({totalWeeks}) {
     axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=${week}`)
     .then(res => {
       let workingSetGames = []
+      console.log(res.data)
       for (let i=0; i<res.data.events.length; i++) {
         let gameArray = res.data.events[i].competitions[0]
         let temp = {
@@ -102,6 +103,8 @@ export default function CFB({totalWeeks}) {
           awayRecord: `(${gameArray.competitors[1].records[0].summary})`,
           awayScore:  gameArray.competitors[1].score,
           awaySchool:  gameArray.competitors[1].team.location,
+          awayAbbreviation: gameArray.competitors[1].team.abbreviation,
+          awayID: gameArray.competitors[1].team.id,
           homeColor: `#${gameArray.competitors[0].team.color}`,
           homeLogo: gameArray.competitors[0].team.logo,
           homeName: `${gameArray.competitors[0].team.name}`,
@@ -109,11 +112,12 @@ export default function CFB({totalWeeks}) {
           homeScore:  gameArray.competitors[0].score,
           homeSchool:  gameArray.competitors[0].team.location,
           status: gameArray.status.type.description,
-          homeAbbreviation: gameArray.competitors[1].team.abbreviation
+          homeAbbreviation: gameArray.competitors[0].team.abbreviation,
+          homeID: gameArray.competitors[0].team.id
         }
           try{
             temp.spread = gameArray.odds[0].details
-            if (temp.homeAbbreviation === temp.spread.substring(0,3).replace(/\s/g, "")) {
+            if (temp.awayAbbreviation === temp.spread.substring(0,3).replace(/\s/g, "")) {
               temp.spread = temp.spread.substring(temp.spread.length-5)
               temp.spread = temp.spread.replace('-','+')
             }
@@ -149,6 +153,8 @@ export default function CFB({totalWeeks}) {
             awayRecord: game.awayRecord,
             awayScore: game.awayScore,
             awaySchool: game.awaySchool,
+            awayAbbreviation: game.awayAbbreviation,
+            awayID: game.awayID,
             homeColor: game.homeColor,
             homeLogo: game.homeLogo,
             homeName: game.homeName,
@@ -157,7 +163,9 @@ export default function CFB({totalWeeks}) {
             homeSchool: game.homeSchool,
             status: game.status,
             spread: game.spread,
-            overUnder: game.overUnder
+            overUnder: game.overUnder,
+            homeAbbreviation: game.homeAbbreviation,
+            homeID: game.homeID
           }}/>
         ))}
       </ScoreListContainer>
