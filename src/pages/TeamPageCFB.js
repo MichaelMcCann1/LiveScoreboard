@@ -3,12 +3,14 @@ import { useParams, useLocation } from "react-router-dom"
 import axios from 'axios';
 import styled from 'styled-components';
 import ScheduleBoxCFB from '../components/ScheduleBoxCFB';
+import { formatTime } from '../functions/formatTime';
 
 const breakPoint = '(max-width: 600px)'
 
 const Container = styled.div`
-  min-height: 100vh;
+  min-height: calc((var(--vh, 1vh) * 100) - 60px);
   background: rgb(240,240,240);
+  padding-bottom: 5em;
 `
 
 const Header = styled.header`
@@ -78,22 +80,6 @@ export default function TeamPage() {
   const location = useLocation()
   let {id} = useParams();
   const schoolID = location.state?.schoolid
-  
-  const formatTime = function(time){
-    time = new Date(time)
-    let ampm
-    let hours = time.getHours()
-    let minutes = time.getMinutes()
-
-    hours >= 12 ? ampm = 'pm' : ampm = 'am'
-
-    if (hours !== 12) hours = hours % 12
-
-    if (minutes < 10) minutes = `0${minutes}`
-
-    time = `${hours}:${minutes} ${ampm}`
-    return(time)
-  }
 
   const formatDate = function(date){
     date = new Date(date)
@@ -187,18 +173,7 @@ export default function TeamPage() {
         </Header>
         <Schedule>
           {teamDataState.schedule.map((game, index) => (
-            <ScheduleBoxCFB key={index} gameData={{
-              WL: game.WL,
-              otherTeamLogo: game.otherTeamLogo,
-              vsat: game.vsat,
-              otherTeamName: game.otherTeamName,
-              scoreString: game.scoreString,
-              tv: game.tv,
-              date: game.date,
-              time: game.time,
-              otherTeamAbbreviation: game.otherTeamAbbreviation,
-              otherTeamID: game.otherTeamID
-            }}/>
+            <ScheduleBoxCFB key={index} gameData={game}/>
           ))}
         </Schedule>
       </Container >
@@ -209,5 +184,4 @@ export default function TeamPage() {
       </>
     )
   }
-  
 }

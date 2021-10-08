@@ -8,7 +8,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 60px);
+  height: calc((var(--vh, 1vh) * 100) - 60px);
   background: rgb(240,240,240);
 `
 
@@ -91,6 +91,10 @@ const Author = styled.h4`
 const PortfolioLink = styled.a``
 
 export default function Home() {
+
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+
   return (
     <Container>
       <Title>Live Scoreboard</Title>
@@ -98,8 +102,9 @@ export default function Home() {
       <Menu>
         <MenuItem to="/NFL">NFL</MenuItem>
         <MenuItem to="/CFB">NCAA Football</MenuItem>
+        {/* <MenuItem to="/NBA">NBA</MenuItem> */}
       </Menu>
-      <About>Built with ReactJS and Styled Components</About>
+      <About>More leagues coming soon!</About>
       <Author>Developed by <PortfolioLink href="https://michaelrmccann.com" target="_blank">Michael McCann</PortfolioLink></Author>
     </Container>
   )

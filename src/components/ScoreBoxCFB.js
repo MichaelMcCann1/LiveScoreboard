@@ -80,6 +80,7 @@ const School = styled.div`
   font-size: .7rem;
   position: absolute;
   top: 20%;
+  color: black;
 `
 
 const TeamName = styled.span`

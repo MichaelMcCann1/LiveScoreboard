@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import axios from 'axios'
+import SportHeaderDay from '../components/SportHeaderDay'
 import styled from 'styled-components'
 import ScoreBoxNFL from '../components/ScoreBoxNFL'
-import SportHeader from '../components/SportHeader';
-import { formatTime } from '../functions/formatTime';
-import { formatDate } from '../functions/formatDate';
-import { createWeekList } from '../functions/createWeekList';
-import { setWeekButtons } from '../functions/setWeekButtons';
 
 const breakPoint = '(max-width: 550px)'
 
-const Container = styled.div`
-min-height: 100vh;
-background: rgb(240,240,240);
-`
+const Container = styled.div``
 
 const ScoreListContainer = styled.div`
   display: flex;
@@ -29,27 +22,36 @@ const ScoreListContainer = styled.div`
   }
 `
 
-export default function NFL({totalWeeks}) {
+export default function NBA() {
 
-  const [week, setWeek] = useState()
+  const [date, setDate] = useState('')
   const [games, setGames] = useState([])
 
-  const weekList = createWeekList(totalWeeks)
+  const formatTime = function(time){
+    time = new Date(time)
+    let ampm
+    let hours = time.getHours()
+    let minutes = time.getMinutes()
 
-  const handleClick = function(position){
-    setWeekButtons(position, week, totalWeeks, setWeek)
+    hours >= 12 ? ampm = 'pm' : ampm = 'am'
+
+    if (hours !== 12) hours = hours % 12
+
+    if (minutes < 10) minutes = `0${minutes}`
+
+    time = `${hours}:${minutes}${ampm}`
+    return(time)
+  }
+
+  const formatDate = function(date){
+    date = new Date(date)
+    date = date.getDay()
+    let days = ['SUN','MON','TUE','WED','THU','FRI','SAT']
+    return(days[date])
   }
 
   useEffect(() => {
-    axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard`)
-      .then(res => {
-        setWeek(res.data.week.number)
-      })
-  }, [])
-
-  useEffect(() => {
-    if (!week) return
-    axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?week=${week}`)
+    axios.get(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${date}`)
     .then(res => {
       let workingSetGames = []
       for (let i=0; i<res.data.events.length; i++) {
@@ -96,20 +98,42 @@ export default function NFL({totalWeeks}) {
             temp.tv = ''
           }
 
-        if (temp.awayName === "undefined") temp.awayName = "Football Team"
-        if (temp.homeName === "undefined") temp.homeName = "Football Team"
+        if (temp.awayName === "undefined") temp.awayName = "Washington"
+        if (temp.homeName === "undefined") temp.homeName = "Washington"
         workingSetGames.push(temp)
       }
       setGames(workingSetGames)
+      console.log(workingSetGames)
     });
-  }, [week])
+  }, [date])
 
   return (
     <Container>
-      <SportHeader sport="NFL" week={week} weekList={weekList} setWeek={setWeek} totalWeeks={totalWeeks} handleClick={handleClick} />
+      <SportHeaderDay sport='NBA' setDate={setDate}/>
       <ScoreListContainer>
         {games.map((game) => (
-          <ScoreBoxNFL key={game.id} gameData={game} />
+          <ScoreBoxNFL key={game.id} gameData={{
+            date: game.date,
+            time: game.time,
+            tv: game.tv,
+            awayColor: game.awayColor,
+            awayLogo: game.awayLogo,
+            awayName: game.awayName,
+            awayRecord: game.awayRecord,
+            awayScore: game.awayScore,
+            awayLocation: game.awayLocation,
+            awayAbbreviation: game.awayAbbreviation,
+            homeColor: game.homeColor,
+            homeLogo: game.homeLogo,
+            homeName: game.homeName,
+            homeRecord: game.homeRecord,
+            homeScore: game.homeScore,
+            homeLocation: game.homeLocation,
+            homeAbbreviation: game.homeAbbreviation,
+            status: game.status,
+            spread: game.spread,
+            overUnder: game.overUnder
+          }}/>
         ))}
       </ScoreListContainer>
     </Container>

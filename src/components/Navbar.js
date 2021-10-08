@@ -80,8 +80,9 @@ export default function Navbar() {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/NFL">NFL</NavLink>
         <NavLink to="/CFB">NCAA Football</NavLink>
-        <GitHubLink href="https://github.com/MichaelMcCann1/LiveScoreboard" target="_blank">
-          <GitHubLogo src="Images/GitHub.svg"/>
+        {/* <NavLink to="/NBA">NBA</NavLink> */}
+        <GitHubLink href="https://github.com/MichaelMcCann1/LiveScoreboard" target="_blank" rel="noreferrer" aria-label="Link to GitHub repository">
+          <GitHubLogo src="Images/GitHub.svg" alt="GitHub Logo"/>
         </GitHubLink>
       </Nav>
       
