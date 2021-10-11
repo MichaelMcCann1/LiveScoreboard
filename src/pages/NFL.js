@@ -71,6 +71,8 @@ export default function NFL({totalWeeks}) {
           homeScore:  gameArray.competitors[0].score,
           homeLocation:  gameArray.competitors[0].team.location,
           status: gameArray.status.type.description,
+          clock: gameArray.status.displayClock,
+          period: gameArray.status.period,
           homeAbbreviation: gameArray.competitors[0].team.abbreviation,
           awayAbbreviation: gameArray.competitors[1].team.abbreviation
         } 

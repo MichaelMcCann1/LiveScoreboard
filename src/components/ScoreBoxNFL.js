@@ -127,11 +127,40 @@ const Score = styled.span`
 `
 
 export default function ScoreBoxNFL({gameData}) {
+
+  switch (gameData.period) {
+    case 1:
+      gameData.period = '1st'
+      break
+    case 2: 
+      gameData.period = '2nd'
+      break
+    case 3: 
+      gameData.period = '3rd'
+      break
+    case 4: 
+      gameData.period = '4th'
+      break
+    default:
+      gameData.period = "OT"
+  }
+
+
   return (
     <Container>
       <GameInfo>
-        <Date>{gameData.status === "Final" ? '' : gameData.date}</Date>
-        <Time>{gameData.status === "Final" ? gameData.status : gameData.time}</Time>
+        {gameData.status === "Final" && <>
+            <Date>Final</Date>
+            <Time></Time>
+        </>}
+        {gameData.status === "In Progress" && <>
+            <Date>{gameData.clock}</Date>
+            <Time>{gameData.period}</Time>
+        </>}
+        {gameData.status === "Scheduled" && <>
+            <Date>{gameData.date}</Date>
+            <Time>{gameData.time}</Time>
+        </>}
         <TV>{gameData.status === "Final" ? '' : gameData.tv}</TV>
       </GameInfo>
       <LogoBackground color={gameData.awayColor} to={`/NFL/TeamPage/${gameData.awayAbbreviation}`}>

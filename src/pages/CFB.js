@@ -74,6 +74,8 @@ export default function CFB({totalWeeks}) {
           homeScore:  gameArray.competitors[0].score,
           homeSchool:  gameArray.competitors[0].team.location,
           status: gameArray.status.type.description,
+          clock: gameArray.status.displayClock,
+          period: gameArray.status.period,
           homeAbbreviation: gameArray.competitors[0].team.abbreviation,
           homeID: gameArray.competitors[0].team.id
         }
