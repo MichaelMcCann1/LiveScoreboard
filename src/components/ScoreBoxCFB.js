@@ -76,11 +76,12 @@ const NameWrapper = styled.div`
   position: relative;
 `
 
-const School = styled.div`
+const School = styled.span`
   font-size: .7rem;
   position: absolute;
   top: 20%;
   color: black;
+  white-space: nowrap;
 `
 
 const TeamName = styled.span`

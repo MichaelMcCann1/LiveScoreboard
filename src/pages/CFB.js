@@ -7,6 +7,7 @@ import { formatTime } from '../functions/formatTime';
 import { formatDate } from '../functions/formatDate';
 import { createWeekList } from '../functions/createWeekList'
 import { setWeekButtons } from '../functions/setWeekButtons';
+import { formatBetting } from '../functions/formatBetting'
 
 
 const breakPoint = '(max-width: 550px)'
@@ -79,20 +80,8 @@ export default function CFB({totalWeeks}) {
           homeAbbreviation: gameArray.competitors[0].team.abbreviation,
           homeID: gameArray.competitors[0].team.id
         }
-          try{
-            temp.spread = gameArray.odds[0].details
-            if (temp.awayAbbreviation === temp.spread.substring(0,3).replace(/\s/g, "")) {
-              temp.spread = temp.spread.substring(temp.spread.length-5)
-              temp.spread = temp.spread.replace('-','+')
-            }
-            else {
-              temp.spread = temp.spread.substring(temp.spread.length-5)
-            } 
-            temp.overUnder = gameArray.odds[0].overUnder
-            } catch {
-              temp.spread = ''
-              temp.overUnder = ''
-            }
+        formatBetting(temp, gameArray)
+
           try {
             temp.tv = gameArray.broadcasts[0].names[0]
           } catch {
