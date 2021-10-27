@@ -11,7 +11,10 @@ import { formatSelectedData } from '../functions/formatSelectedData'
 
 const breakPoint = '(max-width: 550px)'
 
-const Container = styled.div``
+const Container = styled.div`
+  min-height: 100vh;
+  background: rgb(240,240,240);
+`
 
 const ScoreListContainer = styled.div`
   display: flex;

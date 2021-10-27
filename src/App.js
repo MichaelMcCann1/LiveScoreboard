@@ -5,11 +5,10 @@ import CFB from './pages/CFB'
 import NBA from './pages/NBA'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
-import TeamPageNFL from './pages/TeamPageNFL'
-import TeamPageCFB from './pages/TeamPageCFB'
-import TeamPageNBA from './pages/TeamPageNBA'
+import TeamPage from './pages/TeamPage'
 import NotFound from './pages/NotFound'
 import ScrollToTop from './components/ScrollToTop';
+import Test from './functions/test';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -43,9 +42,8 @@ function App() {
         <Route exact path="/NCAAF"><CFB totalWeeks={15}/></Route>
         <Route exact path="/NFL"><NFL totalWeeks={18}/></Route>
         <Route exact path="/NBA"><NBA /></Route>
-        <Route exact path="/NFL/TeamPage/:id"><TeamPageNFL /></Route>
-        <Route exact path="/NCAAF/TeamPage/:id"><TeamPageCFB /></Route>
-        <Route exact path="/NBA/TeamPage/:id"><TeamPageNBA /></Route>
+        <Route exact path="/:league/TeamPage/:teamID"><TeamPage /></Route>
+        <Route exact path="/test"><Test /></Route>
         <Route component={NotFound} />
       </Switch>
     </Router>

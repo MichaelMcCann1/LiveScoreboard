@@ -139,7 +139,7 @@ export default function ScoreBox({gameData}) {
         <Time>{gameData.time}</Time>
         <TV>{gameData.tv}</TV>
       </GameInfo>
-      <LogoBackground color={gameData.awayColor} to={{pathname: `/${gameData.league}/TeamPage/${gameData.awayAbbreviation}`, state: {schoolid: gameData.awayID}}}>
+      <LogoBackground color={gameData.awayColor} to={`/${gameData.league}/TeamPage/${gameData.awayAbbreviation}`}>
         <Logo src={gameData.awayLogo} alt={`${gameData.awayName} logo`}/>
         <NameWrapper>
           <Location league={gameData.league}>{gameData.awayLocation}</Location>
@@ -147,7 +147,7 @@ export default function ScoreBox({gameData}) {
         </NameWrapper>
         <Score>{gameData.awayScore}</Score>
       </LogoBackground>
-      <LogoBackground color={gameData.homeColor} to={{pathname: `/${gameData.league}/TeamPage/${gameData.homeAbbreviation}`, state: {schoolid: gameData.homeID}}}>
+      <LogoBackground color={gameData.homeColor} to={`/${gameData.league}/TeamPage/${gameData.homeAbbreviation}`}>
         <Logo src={gameData.homeLogo} alt={`${gameData.homeName} logo`}/>
         <NameWrapper>
           <Location>{gameData.homeLocation}</Location>
