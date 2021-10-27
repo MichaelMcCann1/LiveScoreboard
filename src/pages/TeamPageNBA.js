@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useLocation } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import axios from 'axios';
 import styled from 'styled-components';
-import ScheduleBoxNFL from '../components/ScheduleBoxNFL';
+import ScheduleBoxNBA from '../components/ScheduleBoxNBA';
 import { formatTime } from '../functions/formatTime';
 
 const breakPoint = '(max-width: 600px)'
@@ -75,10 +75,9 @@ const Schedule = styled.div`
 
 export default function TeamPage() {
 
+
   const [teamDataState, setTeamDataState] = useState({})
-  const location = useLocation()
   let {id} = useParams();
-  const schoolID = location.state?.schoolid
 
   const formatDate = function(date){
     date = new Date(date)
@@ -87,8 +86,9 @@ export default function TeamPage() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     let teamData = {}
-    axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/NFL/teams/${id}/schedule`)
+    axios.get(`https://site.api.espn.com/apis/site/v2/sports/basketball/NBA/teams/${id}/schedule`)
     .then(res => {
       teamData.logo = res.data.team.logo
       teamData.displayName = res.data.team.displayName
@@ -172,7 +172,7 @@ export default function TeamPage() {
         </Header>
         <Schedule>
           {teamDataState.schedule.map((game, index) => (
-            <ScheduleBoxNFL key={index} gameData={game}/>
+            <ScheduleBoxNBA key={index} gameData={game}/>
           ))}
         </Schedule>
       </Container >

@@ -19,10 +19,10 @@ const Title = styled.h1`
   font-size: 3rem;
   font-weight: 500;
   text-align: center;
+  margin-bottom: 1em;
 
   @media ${breakPoint} {
     font-size: 2.5rem;
-    margin-bottom: 1em;
   }
 `
 
@@ -30,8 +30,7 @@ const DayWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* max-width: 600px; */
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
 
   @media ${breakPoint} {
@@ -57,7 +56,7 @@ export default function SportHeaderDay({sport, setDate}) {
     <Header>
       <Title>{sport} Scores</Title>
       <DayWrapper>
-        <Calendar onChange={onChange} value={value} minDate={new Date('2021-10-03T00:00:00')} maxDate={new Date('2022-04-10T00:00:00')}/>
+        <Calendar onChange={onChange} value={value} minDate={new Date('2021-10-19T00:00:00')} maxDate={new Date('2022-04-10T00:00:00')}/>
       </DayWrapper>
     </Header>
   )

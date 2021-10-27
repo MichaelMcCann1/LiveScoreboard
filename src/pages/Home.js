@@ -102,7 +102,7 @@ export default function Home() {
       <Menu>
         <MenuItem to="/NFL">NFL</MenuItem>
         <MenuItem to="/CFB">NCAA Football</MenuItem>
-        {/* <MenuItem to="/NBA">NBA</MenuItem> */}
+        <MenuItem to="/NBA">NBA</MenuItem>
       </Menu>
       <About>More leagues coming soon!</About>
       <Author>Developed by <PortfolioLink href="https://michaelrmccann.com" target="_blank">Michael McCann</PortfolioLink></Author>

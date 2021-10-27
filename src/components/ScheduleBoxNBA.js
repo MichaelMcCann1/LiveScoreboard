@@ -68,7 +68,7 @@ const TV = styled.span``
 export default function ScheduleBoxNFL({gameData}) {
 
   return (
-    <Container to={{pathname: `/NFL/TeamPage/${gameData.otherTeamAbbreviation}`, state: {schoolid: gameData.otherTeamID}}}>
+    <Container to={`/NBA/TeamPage/${gameData.otherTeamAbbreviation}`}>
       <Logo src={gameData.otherTeamLogo}/>
       <Vsat>{gameData.vsat}</Vsat>
       <OtherTeamName>{gameData.otherTeamName}</OtherTeamName>

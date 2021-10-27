@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
-import ScoreBoxCFB from '../components/ScoreBoxCFB'
-import SportHeader from '../components/SportHeader'
+import ScoreBox from '../components/ScoreBox'
+import SportHeaderWeek from '../components/SportHeaderWeek'
 import { formatTime } from '../functions/formatTime';
 import { formatDate } from '../functions/formatDate';
 import { createWeekList } from '../functions/createWeekList'
 import { setWeekButtons } from '../functions/setWeekButtons';
 import { formatBetting } from '../functions/formatBetting'
+import { formatTV } from '../functions/formatTV'
+import { formatSelectedData } from '../functions/formatSelectedData'
 
 
 const breakPoint = '(max-width: 550px)'
@@ -55,39 +57,36 @@ export default function CFB({totalWeeks}) {
     .then(res => {
       let workingSetGames = []
       for (let i=0; i<res.data.events.length; i++) {
-        let gameArray = res.data.events[i].competitions[0]
-        let temp = {
-          id: gameArray.id,
-          date: formatDate(gameArray.date),
-          time: formatTime(gameArray.date),
-          awayColor: `#${gameArray.competitors[1].team.color}`,
-          awayLogo: gameArray.competitors[1].team.logo,
-          awayName: `${gameArray.competitors[1].team.name}`,
-          awayRecord: `(${gameArray.competitors[1].records[0].summary})`,
-          awayScore:  gameArray.competitors[1].score,
-          awaySchool:  gameArray.competitors[1].team.location,
-          awayAbbreviation: gameArray.competitors[1].team.abbreviation,
-          awayID: gameArray.competitors[1].team.id,
-          homeColor: `#${gameArray.competitors[0].team.color}`,
-          homeLogo: gameArray.competitors[0].team.logo,
-          homeName: `${gameArray.competitors[0].team.name}`,
-          homeRecord: `(${gameArray.competitors[0].records[0].summary})`,
-          homeScore:  gameArray.competitors[0].score,
-          homeSchool:  gameArray.competitors[0].team.location,
-          status: gameArray.status.type.description,
-          clock: gameArray.status.displayClock,
-          period: gameArray.status.period,
-          homeAbbreviation: gameArray.competitors[0].team.abbreviation,
-          homeID: gameArray.competitors[0].team.id
-        }
-        formatBetting(temp, gameArray)
-
-          try {
-            temp.tv = gameArray.broadcasts[0].names[0]
-          } catch {
-            temp.tv = ''
-          }
-          workingSetGames.push(temp)
+        let rawGameData = res.data.events[i].competitions[0]
+        let selectedGameData = {
+          id: rawGameData.id,
+          date: formatDate(rawGameData.date),
+          time: formatTime(rawGameData.date),
+          awayColor: `#${rawGameData.competitors[1].team.color}F2`,
+          awayLogo: rawGameData.competitors[1].team.logo,
+          awayName: `${rawGameData.competitors[1].team.name}`,
+          awayRecord: `(${rawGameData.competitors[1].records[0].summary})`,
+          awayScore:  rawGameData.competitors[1].score,
+          awayLocation:  rawGameData.competitors[1].team.location,
+          awayID: rawGameData.competitors[1].team.id,
+          homeColor: `#${rawGameData.competitors[0].team.color}F2`,
+          homeLogo: rawGameData.competitors[0].team.logo,
+          homeName: `${rawGameData.competitors[0].team.name}`,
+          homeRecord: `(${rawGameData.competitors[0].records[0].summary})`,
+          homeScore:  rawGameData.competitors[0].score,
+          homeLocation:  rawGameData.competitors[0].team.location,
+          status: rawGameData.status.type.description,
+          clock: rawGameData.status.displayClock,
+          period: rawGameData.status.period,
+          homeAbbreviation: rawGameData.competitors[0].team.abbreviation,
+          awayAbbreviation: rawGameData.competitors[1].team.abbreviation,
+          homeID: rawGameData.competitors[0].team.id,
+          league: res.data.leagues[0].abbreviation
+        } 
+        formatBetting(selectedGameData, rawGameData)
+        formatTV(selectedGameData, rawGameData)
+        formatSelectedData(selectedGameData)
+        workingSetGames.push(selectedGameData)
       }
       setGames(workingSetGames)
     })
@@ -96,10 +95,10 @@ export default function CFB({totalWeeks}) {
   
   return (
     <Container>
-      <SportHeader sport="NCAA Football" week={week} weekList={weekList} setWeek={setWeek} totalWeeks={totalWeeks} handleClick={handleClick} />
+      <SportHeaderWeek sport="NCAA Football" week={week} weekList={weekList} setWeek={setWeek} totalWeeks={totalWeeks} handleClick={handleClick} />
       <ScoreListContainer>
         {games.map((game) => (
-          <ScoreBoxCFB key={game.id} gameData={game}/>
+          <ScoreBox key={game.id} gameData={game}/>
         ))}
       </ScoreListContainer>
     </Container>
