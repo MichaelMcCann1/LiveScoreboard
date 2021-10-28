@@ -101,7 +101,7 @@ export default function Home() {
       <SubTitle>Check your teams scores in real-time</SubTitle>
       <Menu>
         <MenuItem to="/NFL">NFL</MenuItem>
-        <MenuItem to="/CFB">NCAA Football</MenuItem>
+        <MenuItem to="/NCAAF">NCAA Football</MenuItem>
         <MenuItem to="/NBA">NBA</MenuItem>
       </Menu>
       <About>More leagues coming soon!</About>

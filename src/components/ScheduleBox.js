@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Container = styled(Link)`
   height: 50px;
-  width: 250px;
+  width: 275px;
   display: flex;
   align-items: center;
   margin: .4em 2em;
@@ -26,17 +26,20 @@ const Logo = styled.img`
 `
 
 const Vsat = styled.span`
-  margin: 0 10px;
+  margin: 0 7px;
   font-size: .75rem;
 `
 
 const OtherTeamName = styled.span`
   font-weight: 500;
+  white-space: normal;
+  width: 7em;
+  line-height: 1em;
 `
 
 const WL = styled.span`
   position: absolute;
-  right: 70px;
+  right: 80px;
   transform: translateX(50%);
   text-align: center;
   color: ${props => props.WL === 'W' ? 'green' : 'red'};
@@ -68,7 +71,7 @@ const TV = styled.span``
 export default function ScheduleBox({gameData}) {
 
   return (
-    <Container to={{pathname: `/${gameData.league}/TeamPage/${gameData.otherTeamAbbreviation}`, state: {schoolid: gameData.otherTeamID}}}>
+    <Container to={`/${gameData.league}/TeamPage/${gameData.otherTeamAbbreviation}`}>
       <Logo src={gameData.otherTeamLogo}/>
       <Vsat>{gameData.vsat}</Vsat>
       <OtherTeamName>{gameData.otherTeamName}</OtherTeamName>

@@ -42,7 +42,7 @@ function App() {
         <Route exact path="/NCAAF"><CFB totalWeeks={15}/></Route>
         <Route exact path="/NFL"><NFL totalWeeks={18}/></Route>
         <Route exact path="/NBA"><NBA /></Route>
-        <Route exact path="/:league/TeamPage/:teamID"><TeamPage /></Route>
+        <Route exact path="/:league/TeamPage/:teamAbbreviation"><TeamPage /></Route>
         <Route exact path="/test"><Test /></Route>
         <Route component={NotFound} />
       </Switch>

@@ -4,7 +4,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import ScheduleBox from '../components/ScheduleBox';
 import { formatTime } from '../functions/formatTime';
-import { NFLids, CFBids, NBAids } from '../teamIDs'
+import { getTeamID } from '../functions/getTeamID';
+import { getSport } from '../functions/getSport';
 
 const breakPoint = '(max-width: 600px)'
 
@@ -77,15 +78,9 @@ const Schedule = styled.div`
 export default function TeamPage() {
 
   const [teamDataState, setTeamDataState] = useState({})
-  let {league, teamID: teamAbbreviation} = useParams();
-  let teamID
-  let sport = 'football'
-  if (league === 'NFL') teamID = NFLids[teamAbbreviation]
-  else if (league === 'NCAAF' || league === 'college-football') teamID = CFBids[teamAbbreviation]
-  else if (league === 'NBA') teamID = NBAids[teamAbbreviation]
-
-  if (league === 'NBA') sport = 'basketball'
-
+  let {league, teamAbbreviation} = useParams();
+  let teamID = getTeamID(league, teamAbbreviation)
+  let sport = getSport(league)
   if (league === 'NCAAF') league = 'college-football'
 
   const formatDate = function(date){
@@ -152,7 +147,7 @@ export default function TeamPage() {
         else game.WL = ''
   
         if (game.activeTeamScore > game.otherTeamScore) game.scoreString = game.activeTeamScore + '-' + game.otherTeamScore
-        if (game.activeTeamScore === undefined) game.scoreString = ''
+        else if (game.activeTeamScore === undefined) game.scoreString = ''
         else game.scoreString = game.otherTeamScore + '-' + game.activeTeamScore
 
         game.time = formatTime(game.date)
