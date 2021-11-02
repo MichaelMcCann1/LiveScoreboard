@@ -8,10 +8,12 @@ const breakPoint = '(max-width: 550px)'
 const Header = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5em 0 3em 0;
+  padding-top: calc(5em + 60px);
+  padding-bottom: 3em;
 
   @media ${breakPoint} {
-    padding: 3em 0 1em 0;
+    padding-top: calc(3em + 60px);
+    padding-bottom: 1em;
   }
 `
 

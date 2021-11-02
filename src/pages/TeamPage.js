@@ -10,7 +10,8 @@ import { getSport } from '../functions/getSport';
 const breakPoint = '(max-width: 600px)'
 
 const Container = styled.div`
-  min-height: calc((var(--vh, 1vh) * 100) - 60px);
+  padding-top: 60px;
+  min-height: calc((var(--vh, 1vh) * 100));
   background: rgb(240,240,240);
   padding-bottom: 5em;
 `
@@ -160,7 +161,7 @@ export default function TeamPage() {
       teamData.schedule = scheduleArray
       setTeamDataState(teamData)
     })
-  }, [teamAbbreviation])
+  }, [teamID, sport, league, teamAbbreviation])
   
 
   if (Object.keys(teamDataState).length !== 0)

@@ -8,8 +8,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc((var(--vh, 1vh) * 100) - 60px);
+  height: calc((var(--vh, 1vh) * 100));
   background: rgb(240,240,240);
+  padding-top: 60px;
 `
 
 const Title = styled.h1`

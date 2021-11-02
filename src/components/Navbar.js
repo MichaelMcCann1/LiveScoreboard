@@ -10,8 +10,8 @@ const Container = styled.div`
   height: 60px;
   background: lightgray;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.3);
-  position: relative;
-
+  position: fixed;
+  z-index: 10;
 `
 
 const Nav = styled.nav`
@@ -74,7 +74,7 @@ const MenuIcon = styled.div`
 `
 
 const VerticalMenu = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
   background: lightgray;
   top: 60px;

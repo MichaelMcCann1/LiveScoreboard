@@ -1,18 +1,4 @@
 export const formatSelectedData = function(selectedGameData){
-  if (selectedGameData.status === 'Final') {
-    selectedGameData.date = 'Final'
-    selectedGameData.time = ''
-  } else if (selectedGameData.status === 'In Progress') {
-    selectedGameData.date = selectedGameData.clock
-    selectedGameData.time = selectedGameData.period
-  }
-
-  if (selectedGameData.status === 'Final') selectedGameData.tv = ''
-
-  if (selectedGameData.status === 'Scheduled') {
-    selectedGameData.overUnder ? selectedGameData.awayScore = `T:${selectedGameData.overUnder}` : selectedGameData.awayScore = ''
-    selectedGameData.homeScore = selectedGameData.spread
-  }
 
   switch (selectedGameData.period) {
     case 1:
@@ -30,6 +16,24 @@ export const formatSelectedData = function(selectedGameData){
     default:
       selectedGameData.period = "OT"
   }
+
+  if (selectedGameData.status === 'Final') {
+    selectedGameData.date = 'Final'
+    selectedGameData.time = ''
+  } else if (selectedGameData.status === 'In Progress') {
+    selectedGameData.date = selectedGameData.clock
+    selectedGameData.time = selectedGameData.period
+  }
+
+  if (selectedGameData.status === 'Final') selectedGameData.tv = ''
+
+  if (selectedGameData.status === 'Scheduled') {
+    selectedGameData.overUnder ? selectedGameData.awayScore = `T:${selectedGameData.overUnder}` : selectedGameData.awayScore = ''
+    selectedGameData.homeScore = selectedGameData.spread
+  }
+
+
+  
 
   if (selectedGameData.leauge === 'NFL' && selectedGameData.awayName === "undefined") selectedGameData.awayName = "Football Team"
   if (selectedGameData.leauge === 'NFL' && selectedGameData.homeName === "undefined") selectedGameData.homeName = "Football Team"

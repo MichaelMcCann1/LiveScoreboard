@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
     padding: .5em .4em;
   }
   body {
-    overflow-x: hidden;
+    width: 100%;
   }
 `
 
