@@ -1,3 +1,5 @@
+**This project is depreciated. I started this project a couple years ago when I first started learning web development.** 
+
 # LiveScoreboard
 
 **Live Link to Project:** https://mm-livescores.web.app/
